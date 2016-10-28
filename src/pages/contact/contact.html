@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title><ion-icon name="contacts"></ion-icon> Contact List</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-searchbar (ionInput)="fnSearch($event)"></ion-searchbar>
+    <ion-list *ngIf="isContactsLoaded">
+        <button ion-item *ngFor="let contact of contactList" (click)="fnGoTo($event, contact)">
+            <h2>{{contact.name}}</h2>
+
+            <p>{{contact.email}}</p>
+
+            <p>{{contact.phone}}</p>
+        </button>
+    </ion-list>
+</ion-content>

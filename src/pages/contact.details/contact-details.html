@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>
+            <ion-icon name="person-add"></ion-icon>
+            {{contact._id ? 'Edit' : 'Add'}} Contact
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <form [formGroup]="form" (ngSubmit)="fnOnSubmit()" novalidate>
+
+            <ion-item>
+                <ion-input type="text" placeholder="*Name" formControlName="name"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="(submitAttempt || form.controls['name'].touched) && !form.controls['name'].valid">
+                <ion-label color="danger" *ngIf="!form.controls['name'].valid">Name is required.</ion-label>
+            </ion-item>
+
+            <ion-item>
+                <ion-input type="text" placeholder="*Email" formControlName="email"
+                           pattern='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}'></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="(submitAttempt || form.controls['email'].touched) && !form.controls['email'].valid">
+                <ion-label *ngIf="form.controls['email'].value == ''" color="danger">Email is required.</ion-label>
+                <ion-label *ngIf="form.controls['email'].value != '' && !form.controls['email'].valid" color="danger">
+                    Enter valid email address.
+                </ion-label>
+            </ion-item>
+
+            <ion-item>
+                <ion-input type="number" pattern="[0-9]{10}" placeholder="*Phone" formControlName="phone"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="(submitAttempt || form.controls['phone'].touched) && !form.controls['phone'].valid">
+                <ion-label *ngIf="form.controls['phone'].value == ''" color="danger"> Phone no is required.</ion-label>
+                <ion-label *ngIf="form.controls['phone'].value != '' && !form.controls['phone'].valid" color="danger">
+                    10 digits required.
+                </ion-label>
+            </ion-item>
+
+            <button type="submit" ion-button full>Save</button>
+        </form>
+        <button ion-button full (click)="fnDeleteContact(contact._id)" color="danger" *ngIf="contact._id">
+            Delete
+        </button>
+    </ion-list>
+</ion-content>
+
